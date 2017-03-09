@@ -15,10 +15,7 @@ class kanervacoder:
     self._w = np.zeros(self._n_pts)
   
   def _get_active_pts(self, x):
-    self._a_pts = np.argpartition(np.sum((self._pts - x) ** 2, axis=1), self._k)[:self._k] # Euclidean
-    #self._a_pts = np.argpartition(np.sum(np.abs(self._pts - x), axis=1), self._k)[:self._k] # Manhattan
-    #self._a_pts = np.argpartition(np.sum(np.sin(self._pts - x), axis=1), self._k)[:self._k] # Sine
-    #self._a_pts = np.argpartition(np.sum(np.maximum(self._pts - x, 0), axis=1), self._k)[:self._k] # ReLU
+    self._a_pts = np.argpartition(np.sum((self._pts - x) ** 2, axis=1), self._k)[:self._k]
   
   def __getitem__(self, x):
     self._get_active_pts(x)
