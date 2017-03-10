@@ -4,18 +4,19 @@ import numpy as np
 
 class kanervacoder:
   def __init__(self, dims, ptypes, sparsity, limits, step_size=0.1, seed=None):
+    np.random.seed(seed)
     self._n_dims = dims
     self._n_pts = ptypes
     self._k = int(sparsity * ptypes)
     self._lims = np.array(limits)
+    self._ranges = self._lims[:, 1] - self._lims[:, 0]
     self._alpha = step_size / self._k
-    self._pts = np.zeros([self._n_pts, self._n_dims]); np.random.seed(seed)
-    for i in range(dims):
-      self._pts[:, i] = self._lims[i][0] + (self._lims[i][1] - self._lims[i][0]) * np.random.random(self._n_pts)
+    self._pts = np.random.random([self._n_pts, self._n_dims])
     self._w = np.zeros(self._n_pts)
   
   def _get_active_pts(self, x):
-    self._a_pts = np.argpartition(np.sum((self._pts - x) ** 2, axis=1), self._k)[:self._k]
+    xs = (x - self._lims[:, 0]) / self._ranges
+    self._a_pts = np.argpartition(np.sum((self._pts - xs) ** 2, axis=1), self._k)[:self._k]
   
   def __getitem__(self, x):
     self._get_active_pts(x)
@@ -33,9 +34,9 @@ def example():
   from mpl_toolkits.mplot3d import Axes3D
   import time
 
-  # kanerva coder dimensions, limits, tilings, step size, and offset vector
+  # kanerva coder dimensions, prototypes, sparsity, limits, and step size
   dims = 2
-  ptypes = 1024
+  ptypes = 512
   sparsity = 0.025
   lims = [(0, 2.0 * np.pi)] * 2
   alpha = 0.1
