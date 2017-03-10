@@ -32,6 +32,6 @@ print K[3.3, -2.1, 11.1, 0.7]
 
 # Examples
 <p align="center">
-  <img src="https://github.com/MeepMoop/kanervacoding/blob/master/examples/kc_sincos.png?raw=true"><br>
+  <img src="https://github.com/MeepMoop/kanervacoding/blob/master/examples/kc_sincos.png"><br>
   Kanerva coder with 512 prototypes and 2.5% sparsity approximating f(x, y) = sin(x) + cos(y) + <i>N</i>(0, 0.1)<br><br>
 </p>
