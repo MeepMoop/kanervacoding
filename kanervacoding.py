@@ -36,7 +36,7 @@ def example():
   # kanerva coder dimensions, limits, tilings, step size, and offset vector
   dims = 2
   ptypes = 1024
-  sparsity = 32 / 1024
+  sparsity = 0.025
   lims = [(0, 2.0 * np.pi)] * 2
   alpha = 0.1
   seed = None
