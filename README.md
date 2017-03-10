@@ -15,7 +15,7 @@ from kanervacoding import kanervacoder
 # dimensions, prototypes, and activation sparsity
 dims = 4
 ptypes = 1024
-sparsity = 0.025  # (k = sparsity * prototypes)
+sparsity = 0.025  # (k = sparsity * ptypes)
 
 # value limits of each dimension (min, max)
 lims = [(3.0, 7.5), (-4.4, 4.2), (9.6, 12.7), (0.0, 1.0)]
