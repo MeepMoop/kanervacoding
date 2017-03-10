@@ -1,6 +1,6 @@
 # Kanerva Coding
 
-[Kanerva coding](https://webdocs.cs.ualberta.ca/~sutton/book/ebook/node88.html#SECTION04234000000000000000) is a function approximation method that distributes *prototypes*  across the state space, and learns weights associated with them. This implementation uses a Euclidian distance measure, and activates the *k*-nearest prototypes to the input.
+[Kanerva coding](https://webdocs.cs.ualberta.ca/~sutton/book/ebook/node88.html#SECTION04234000000000000000) is a function approximation method that distributes *prototypes*  across the state space, and learns weights associated with them. This implementation is a variant that uses a Euclidean distance measure, and activates the *k*-nearest prototypes to the input.
 
 # Dependencies
 
