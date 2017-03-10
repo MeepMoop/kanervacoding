@@ -7,7 +7,7 @@ class kanervacoder:
     np.random.seed(seed)
     self._n_dims = dims
     self._n_pts = ptypes
-    self._k = int(sparsity * ptypes)
+    self._k = round(sparsity * ptypes)
     self._lims = np.array(limits)
     self._ranges = self._lims[:, 1] - self._lims[:, 0]
     self._alpha = step_size / self._k
@@ -16,7 +16,7 @@ class kanervacoder:
   
   def _get_active_pts(self, x):
     xs = (x - self._lims[:, 0]) / self._ranges
-    self._a_pts = np.argpartition(np.sum((self._pts - xs) ** 2, axis=1), self._k)[:self._k]
+    self._a_pts = np.argpartition(np.max(np.abs(self._pts - xs), axis=1), self._k)[:self._k]
   
   def __getitem__(self, x):
     self._get_active_pts(x)
@@ -28,6 +28,7 @@ class kanervacoder:
 
   def set_step_size(self, step_size):
     self._alpha = step_size / self._k
+
 
 def example():
   import matplotlib.pyplot as plt
