@@ -1,6 +1,6 @@
 # Kanerva Coding
 
-[Kanerva coding](https://webdocs.cs.ualberta.ca/~sutton/book/ebook/node88.html#SECTION04234000000000000000) is a function approximation method that distributes *prototypes*  across the state space, and learns weights associated with them. This implementation is a variant that uses a Euclidean distance measure, and activates the *k*-nearest prototypes to the input.
+[Kanerva coding](https://webdocs.cs.ualberta.ca/~sutton/book/ebook/node88.html#SECTION04234000000000000000) is a function approximation method that distributes *prototypes*  across the state space, and learns weights associated with them. This implementation is a variant that uses a Euclidean distance measure, and activates the *k*-nearest prototypes (set through a sparsity parameter) to the input.
 
 # Dependencies
 
@@ -29,3 +29,9 @@ K[3.3, -2.1, 11.1, 0.7] = 5.5
 # get approximated value at (3.3, -2.1, 11.1, 0.7)
 print K[3.3, -2.1, 11.1, 0.7]
 ```
+
+# Examples
+<p align="center">
+  <img src="https://raw.githubusercontent.com/MeepMoop/tilecoding/master/examples/kc_sincos.png"><br>
+  Kanerva coder with 8 tilings approximating 512 prototypes and 2.5% sparsity approximating f(x, y) = sin(x) + cos(y) + <i>N</i>(0, 0.1)<br><br>
+</p>
