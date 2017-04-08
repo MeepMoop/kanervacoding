@@ -7,7 +7,7 @@ class kanervacoder:
     np.random.seed(seed)
     self._n_dims = dims
     self._n_pts = ptypes
-    self._k = round(sparsity * ptypes)
+    self._k = int(round(sparsity * ptypes))
     self._lims = np.array(limits)
     self._ranges = self._lims[:, 1] - self._lims[:, 0]
     self._alpha = step_size / self._k
