@@ -73,7 +73,7 @@ def example():
   z = np.zeros([len(y), len(x)])
   for i in range(len(x)):
     for j in range(len(y)):
-      z[j, i] = K[x[i], y[j]]
+      z[i, j] = K[x[i], y[j]]
 
   # plot
   fig = plt.figure()
