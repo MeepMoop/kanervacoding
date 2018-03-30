@@ -31,7 +31,7 @@ def example():
   ptypes = 512
   sparsity = 0.025
   lims = [(0, 2.0 * np.pi)] * 2
-  seed = None
+  seed = 123
 
   # create kanerva coder
   K = kanervacoder(dims, ptypes, sparsity, lims, seed)
