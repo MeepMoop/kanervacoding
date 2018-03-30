@@ -3,7 +3,7 @@ from __future__ import print_function
 import numpy as np
 
 class kanervacoder:
-  def __init__(self, dims, ptypes, sparsity, limits, seed=None):
+  def __init__(self, dims, ptypes, sparsity, limits, dist=lambda x: np.max(np.abs(x), axis=1), seed=None):
     np.random.seed(seed)
     self._n_dims = dims
     self._n_pts = ptypes
@@ -11,14 +11,16 @@ class kanervacoder:
     self._lims = np.array(limits)
     self._ranges = self._lims[:, 1] - self._lims[:, 0]
     self._pts = np.random.random([self._n_pts, self._n_dims])
+    self._dist = dist
 
   @property
   def n_ptypes(self):
+
     return self._n_pts
   
   def __getitem__(self, x):
     xs = (x - self._lims[:, 0]) / self._ranges
-    return np.argpartition(np.max(np.abs(self._pts - xs), axis=1), self._k)[:self._k]
+    return np.argpartition(self._dist(self._pts - xs), self._k)[:self._k]
 
 
 def example():
@@ -26,15 +28,14 @@ def example():
   from mpl_toolkits.mplot3d import Axes3D
   import time
 
-  # kanerva coder dimensions, prototypes, sparsity, limits, and step size
+  # kanerva coder dimensions, limits, prototypes, sparsity
   dims = 2
+  lims = [(0, 2.0 * np.pi)] * 2
   ptypes = 512
   sparsity = 0.025
-  lims = [(0, 2.0 * np.pi)] * 2
-  seed = None
 
   # create kanerva coder
-  K = kanervacoder(dims, ptypes, sparsity, lims, seed)
+  K = kanervacoder(dims, ptypes, sparsity, lims)
 
   # learning params
   theta = np.zeros(K.n_ptypes)
