@@ -10,24 +10,29 @@
 # Usage
 
 ```python
+import numpy as np
 from kanervacoding import kanervacoder
 
-# dimensions, prototypes, and activation sparsity
+# grid dimensions, value limits of each dimension, and tilings
+# dimensions, value limits of each dimension, prototypes, and sparsity
 dims = 4
+lims = [(3.0, 7.5), (-4.4, 4.2), (9.6, 12.7), (0.0, 1.0)]
 ptypes = 1024
 sparsity = 0.025  # (k = sparsity * ptypes)
 
-# value limits of each dimension (min, max)
-lims = [(3.0, 7.5), (-4.4, 4.2), (9.6, 12.7), (0.0, 1.0)]
+# create kanervacoder
+K = kanervacoder(dims, ptypes, sparsity, lims)
 
-# create kanervacoder with step size 0.1
-K = kanervacoder(dims, ptypes, sparsity, lims, 0.1)
+# init weights and step size
+theta = np.zeros(K.n_ptypes)
+alpha = 0.1 / round(sparsity * ptypes)
 
 # training iteration with value 5.5 at location (3.3, -2.1, 11.1, 0.7)
-K[3.3, -2.1, 11.1, 0.7] = 5.5
+phi = K[3.3, -2.1, 11.1, 0.7]
+theta[phi] = alpha * (5.5 - theta[phi].sum())
 
 # get approximated value at (3.3, -2.1, 11.1, 0.7)
-print K[3.3, -2.1, 11.1, 0.7]
+print(theta[phi].sum())
 ```
 
 # Examples

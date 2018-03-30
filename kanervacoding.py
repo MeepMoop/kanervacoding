@@ -3,31 +3,22 @@ from __future__ import print_function
 import numpy as np
 
 class kanervacoder:
-  def __init__(self, dims, ptypes, sparsity, limits, step_size=0.1, seed=None):
+  def __init__(self, dims, ptypes, sparsity, limits, seed=None):
     np.random.seed(seed)
     self._n_dims = dims
     self._n_pts = ptypes
     self._k = int(round(sparsity * ptypes))
     self._lims = np.array(limits)
     self._ranges = self._lims[:, 1] - self._lims[:, 0]
-    self._alpha = step_size / self._k
     self._pts = np.random.random([self._n_pts, self._n_dims])
-    self._w = np.zeros(self._n_pts)
-  
-  def _get_active_pts(self, x):
-    xs = (x - self._lims[:, 0]) / self._ranges
-    self._a_pts = np.argpartition(np.max(np.abs(self._pts - xs), axis=1), self._k)[:self._k]
+
+  @property
+  def n_ptypes(self):
+    return self._n_pts
   
   def __getitem__(self, x):
-    self._get_active_pts(x)
-    return np.sum(self._w[self._a_pts])
-
-  def __setitem__(self, x, val):
-    self._get_active_pts(x)
-    self._w[self._a_pts] += self._alpha * (val - np.sum(self._w[self._a_pts]))
-
-  def set_step_size(self, step_size):
-    self._alpha = step_size / self._k
+    xs = (x - self._lims[:, 0]) / self._ranges
+    return np.argpartition(np.max(np.abs(self._pts - xs), axis=1), self._k)[:self._k]
 
 
 def example():
@@ -40,11 +31,14 @@ def example():
   ptypes = 512
   sparsity = 0.025
   lims = [(0, 2.0 * np.pi)] * 2
-  alpha = 0.1
   seed = None
 
   # create kanerva coder
-  K = kanervacoder(dims, ptypes, sparsity, lims, alpha, seed)
+  K = kanervacoder(dims, ptypes, sparsity, lims, seed)
+
+  # learning params
+  theta = np.zeros(K.n_ptypes)
+  alpha = 0.1 / round(sparsity * ptypes)
 
   # target function with gaussian noise
   def target_ftn(x, y, noise=True):
@@ -59,8 +53,9 @@ def example():
       xi = lims[0][0] + np.random.random() * (lims[0][1] - lims[0][0])
       yi = lims[1][0] + np.random.random() * (lims[1][1] - lims[1][0])
       zi = target_ftn(xi, yi)
-      K[xi, yi] = zi
-      mse += (K[xi, yi] - zi) ** 2
+      phi = K[xi, yi]
+      theta[phi] += alpha * (zi - theta[phi].sum())
+      mse += (theta[phi].sum() - zi) ** 2
     mse /= batch_size
     print('samples:', (iters + 1) * batch_size, 'batch_mse:', mse)
   print('elapsed time:', time.time() - timer)
@@ -73,7 +68,7 @@ def example():
   z = np.zeros([len(y), len(x)])
   for i in range(len(x)):
     for j in range(len(y)):
-      z[i, j] = K[x[i], y[j]]
+      z[i, j] = theta[K[x[i], y[j]]].sum()
 
   # plot
   fig = plt.figure()
