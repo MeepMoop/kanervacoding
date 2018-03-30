@@ -15,7 +15,6 @@ class kanervacoder:
 
   @property
   def n_ptypes(self):
-
     return self._n_pts
   
   def __getitem__(self, x):
