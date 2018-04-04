@@ -13,7 +13,6 @@
 import numpy as np
 from kanervacoding import kanervacoder
 
-# grid dimensions, value limits of each dimension, and tilings
 # dimensions, value limits of each dimension, prototypes, and sparsity
 dims = 4
 lims = [(3.0, 7.5), (-4.4, 4.2), (9.6, 12.7), (0.0, 1.0)]
