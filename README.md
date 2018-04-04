@@ -1,6 +1,6 @@
 # Kanerva Coding
 
-[Kanerva coding](https://webdocs.cs.ualberta.ca/~sutton/book/ebook/node88.html#SECTION04234000000000000000) is a function approximation method that distributes *prototypes*  across the state space, and learns weights associated with them. This implementation is a variant that uses the L∞ distance metric, and activates the *k*-nearest prototypes (set through a sparsity parameter) to the input.
+[Kanerva coding](http://incompleteideas.net/book/ebook/node88.html#SECTION04234000000000000000) is a function approximation method that distributes *prototypes*  across the state space, and learns weights associated with them. This implementation is a variant that uses the L∞ distance metric, and activates the *k*-nearest prototypes (set through a sparsity parameter) to the input.
 
 # Dependencies
 
