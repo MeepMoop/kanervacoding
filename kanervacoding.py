@@ -37,7 +37,7 @@ def example():
   K = kanervacoder(dims, ptypes, sparsity, lims)
 
   # learning params
-  theta = np.zeros(K.n_ptypes)
+  w = np.zeros(K.n_ptypes)
   alpha = 0.1 / round(sparsity * ptypes)
 
   # target function with gaussian noise
@@ -54,8 +54,8 @@ def example():
       yi = lims[1][0] + np.random.random() * (lims[1][1] - lims[1][0])
       zi = target_ftn(xi, yi)
       phi = K[xi, yi]
-      theta[phi] += alpha * (zi - theta[phi].sum())
-      mse += (theta[phi].sum() - zi) ** 2
+      w[phi] += alpha * (zi - w[phi].sum())
+      mse += (w[phi].sum() - zi) ** 2
     mse /= batch_size
     print('samples:', (iters + 1) * batch_size, 'batch_mse:', mse)
   print('elapsed time:', time.time() - timer)
@@ -68,7 +68,7 @@ def example():
   z = np.zeros([len(y), len(x)])
   for i in range(len(x)):
     for j in range(len(y)):
-      z[i, j] = theta[K[x[i], y[j]]].sum()
+      z[i, j] = w[K[x[i], y[j]]].sum()
 
   # plot
   fig = plt.figure()
