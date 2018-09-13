@@ -3,7 +3,7 @@ from __future__ import print_function
 import numpy as np
 
 class kanervacoder:
-  def __init__(self, dims, ptypes, sparsity, limits, dist=lambda x: np.max(np.abs(x), axis=1), seed=None):
+  def __init__(self, dims, ptypes, sparsity, limits, dist=lambda x1, x2: np.max(np.abs(x1 - x2), axis=1), seed=None):
     np.random.seed(seed)
     self._n_dims = dims
     self._n_pts = ptypes
@@ -19,7 +19,7 @@ class kanervacoder:
   
   def __getitem__(self, x):
     xs = (x - self._lims[:, 0]) / self._ranges
-    return np.argpartition(self._dist(self._pts - xs), self._k)[:self._k]
+    return np.argpartition(self._dist(self._pts, xs), self._k)[:self._k]
 
 
 def example():
