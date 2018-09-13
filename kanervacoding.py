@@ -3,14 +3,13 @@ from __future__ import print_function
 import numpy as np
 
 class kanervacoder:
-  def __init__(self, dims, ptypes, sparsity, limits, dist=lambda x1, x2: np.max(np.abs(x1 - x2), axis=1), seed=None):
+  def __init__(self, dims, ptypes, n_active, limits, dist=lambda x1, x2: np.max(np.abs(x1 - x2), axis=1), seed=None):
     np.random.seed(seed)
-    self._n_dims = dims
     self._n_pts = ptypes
-    self._k = int(round(sparsity * ptypes))
+    self._k = n_active
     self._lims = np.array(limits)
     self._ranges = self._lims[:, 1] - self._lims[:, 0]
-    self._pts = np.random.random([self._n_pts, self._n_dims])
+    self._pts = np.random.random([self._n_pts, dims])
     self._dist = dist
 
   @property
@@ -27,18 +26,18 @@ def example():
   from mpl_toolkits.mplot3d import Axes3D
   import time
 
-  # kanerva coder dimensions, limits, prototypes, sparsity
+  # kanerva coder dimensions, limits, prototypes, number of active features
   dims = 2
   lims = [(0, 2.0 * np.pi)] * 2
   ptypes = 512
-  sparsity = 0.025
+  n_active = 10
 
   # create kanerva coder
-  K = kanervacoder(dims, ptypes, sparsity, lims)
+  K = kanervacoder(dims, ptypes, n_active, lims)
 
   # learning params
   w = np.zeros(K.n_ptypes)
-  alpha = 0.1 / round(sparsity * ptypes)
+  alpha = 0.1 / n_active
 
   # target function with gaussian noise
   def target_ftn(x, y, noise=True):
