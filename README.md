@@ -1,6 +1,6 @@
 # Kanerva Coding
 
-[Kanerva coding](http://incompleteideas.net/book/ebook/node88.html#SECTION04234000000000000000) is a coarse coding method that distributes *prototypes*  across the state space, and uses them to produce binary feature vectors for for points in a continuous space.. This implementation is a variant that uses the L∞ distance metric, and activates the *k*-nearest prototypes to the input.
+[Kanerva coding](http://incompleteideas.net/book/ebook/node88.html#SECTION04234000000000000000) is a coarse coding method that distributes *prototypes*  across the state space, and uses them to produce binary feature vectors for for points in a continuous space. This implementation is a variant that uses the L∞ distance metric, and activates the *k*-nearest prototypes to the input.
 
 # Dependencies
 
